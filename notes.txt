@@ -1,0 +1,63 @@
+open {service: 'dotreplit', action: 0}
+  > dotReplitGetRequest: {}
+  < dotReplitGetResponse:
+      entrypoint: 'index.js'
+      deployment:
+        run: Exec
+          args: ['node', 'index.js']
+          env: {}
+
+open {service: 'output', name: 'output', action: ATTACH_OR_CREATE}
+  (opens in state ATTACHED)
+  < (state Running)
+  < outputBlockStartEvent:
+      measureStartTime:
+        seconds: {low: xxx, high: 0, unsigned: false}
+        nanos: xxx
+      cgroup: 'xxx'
+  > resizeTerm: ...
+
+  > clear: {} # stop
+  < outputBlockEndEvent:
+      exitCode: -1
+      measureEndTime:
+        seconds: {low: xxx, high: 0, unsigned: false}
+        nanos: xxx
+  < (error 'exit status -1')
+  < (state Stopped)
+
+  > runMain:
+      filePath: 'index.js'
+      runnerId: 'module:nodejs-18:v27-20240117-0bd73cd/runner:nodeJS'
+  < outputBlockStartEvent:
+      measureStartTime:
+        seconds: {low: xxx, high: 0, unsigned: false}
+        nanos: xxx
+      cgroup: 'xxx'
+  < (state Running)
+  > resizeTerm: ...
+  < execInfo: ExecInfo
+      command: ['node index.js']
+      reason: 'run'
+
+https://github.com/replit/crosis
+
+the actual fetchConnectionMetadata involves an api that requires hcaptcha
+
+https://www.tldraw.com/r/XoK1dixgeTJo7AXOH1SZW?viewport=-332%2C-115%2C2634%2C1310&page=page%3AZWHKQb46ngIJmEEJIfFTF
+
+internal:
+widgetID = hcaptcha render {
+  sitekey: (their sitekey),
+  size: 'invisible',
+  callback: ...,
+  open-callback: ...,
+  close-callback: ...,
+  chalexpired-callback: ...,
+  error-callback: ...,
+  expired-callback: ...,
+}
+hcaptcha execute widgetID
+result = value from callback // P1_...dfao
+
+https://github.com/replit/crosis/blob/main/debug/genConnectionMetadata.js
