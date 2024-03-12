@@ -131,6 +131,7 @@ function idTokenGet() {
   console.error('id token refreshing');
   idTokenUseUntil = null;
   return idTokenPromised = (async () => {
+    // https://firebase.google.com/docs/reference/rest/auth#section-refresh-token
     const tokenResult = await requestFull(
       'POST',
       `https://securetoken.googleapis.com/v1/token?key=${encodeURIComponent(REPLIT_FIREBASE_API_KEY)}`,
@@ -425,6 +426,7 @@ const startup = (async () => {
   state = await saveQueueCreate('.data/state.json');
 
   // get username
+  // https://replit.com/@masfrost/replit-gql-schema#schema.graphql
   const currentUserResult = await requestFull(
     'POST',
     'https://replit.com/graphql',
